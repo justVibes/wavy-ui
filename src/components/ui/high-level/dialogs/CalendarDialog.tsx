@@ -3,7 +3,7 @@ import {
   BasicDialog,
   CancelButton,
   UseDialogControllerReturn,
-  useManagedRef
+  useManagedRef,
 } from "@/main";
 import { JSX } from "@emotion/react/jsx-runtime";
 import { BasicButtonProps } from "../../low-level/html/button/BasicButton";
@@ -20,7 +20,7 @@ interface CalendarDialogProps extends CalendarProps {
   backgroundColor?: BasicColor;
   /**@default ".5rem" */
   backdropBlur?: string;
-  /**@default "md" */
+  /**@default "xs" */
   actionButtonSize?: BasicButtonProps["size"];
   onDoneClick?: (date: Date) => void;
   onOpenChange?: (isOpen: boolean) => void;
@@ -29,7 +29,8 @@ function CalendarDialog(props: CalendarDialogProps) {
   // const { triggerRerender } = useRerender();
   const dateRef = useManagedRef<Date>(null);
   const { controller, triggerElement, backdropBlur, backgroundColor, ...rest } =
-    props;
+      props,
+    actionButtonSize = props.actionButtonSize || "xs";
 
   // useEffect(() => {
   //   console.log({
@@ -57,8 +58,8 @@ function CalendarDialog(props: CalendarDialogProps) {
       width={"max-content"}
       controller={controller}
       triggerElement={triggerElement}
-      backgroundColor={backgroundColor || "onSurface[0.1]"}
-      backdropBlur={backdropBlur || ".25rem"}
+      backgroundColor={backgroundColor || "onSurface[0.25]"}
+      backdropBlur={backdropBlur || ".5rem"}
     >
       {props.title && (
         <BasicDialog.Header fontSize={props.titleFontSize}>
@@ -74,10 +75,10 @@ function CalendarDialog(props: CalendarDialogProps) {
       </BasicDialog.Body>
       <BasicDialog.Footer>
         <BasicDialog.ActionTrigger>
-          <CancelButton size={props.actionButtonSize} fade={0.5} />
+          <CancelButton size={actionButtonSize} fade={0.5} />
         </BasicDialog.ActionTrigger>
         <BasicDialog.ActionTrigger>
-          <DoneButton size={props.actionButtonSize} onClick={handleDoneClick} />
+          <DoneButton size={actionButtonSize} onClick={handleDoneClick} />
         </BasicDialog.ActionTrigger>
       </BasicDialog.Footer>
     </BasicDialog>

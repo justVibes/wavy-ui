@@ -55,13 +55,14 @@ interface BasicEditableFieldProps {
   onEdit?: () => void;
   slotProps?: {
     popover?: Prettify<
-      SafeOmit<BasicPopoverProps, "children"> &
-        Partial<{
+      Partial<
+        SafeOmit<BasicPopoverProps, "children"> & {
           /**@default "match-anchor" */
           maxWidth: BasicPopoverProps["maxWidth"];
           /**@default "5rem"*/
           maxHeight: BasicPopoverProps["maxHeight"];
-        }>
+        }
+      >
     >;
   };
 }

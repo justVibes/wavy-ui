@@ -1,7 +1,7 @@
 import { createContext, memo, useContext, useState } from "react";
 
 import { BasicDiv, useManagedRef } from "@/main";
-import { range } from "@wavy/fn";
+import { inRange, range } from "@wavy/fn";
 import DatePicker, { ReactDatePickerCustomHeaderProps } from "react-datepicker";
 import {
   IoChevronBack,
@@ -107,7 +107,19 @@ function Header(
     "October",
     "November",
     "December",
-  ];
+  ].filter(
+    (_, i) => {
+      const currentYear = props.date.getFullYear();
+      if (currentYear === props.minDate.getFullYear()) {
+        return i >= props.minDate.getMonth();
+      }
+      if (currentYear === props.maxDate.getFullYear()) {
+        return i <= props.maxDate.getMonth();
+      }
+
+      return true;
+    }
+  );
   const selectedMonth = months[props.date.getMonth()];
 
   props.visibleYearsRange;
