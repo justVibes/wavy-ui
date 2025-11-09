@@ -14,6 +14,8 @@ import SaveButton from "../buttons/SaveButton";
 import { camelCaseToLetter } from "@wavy/fn";
 import { BasicDivProps } from "../../low-level/html/div/BasicDiv";
 import { BasicDialogProps } from "../../low-level/dialog/BasicDialog";
+import BasicSelect from "../../low-level/html/select/BasicSelect";
+import { useState } from "react";
 
 interface EditAddressDialogProps {
   controller?: UseDialogControllerReturn;
@@ -47,18 +49,20 @@ function EditAddressDialog(props: EditAddressDialogProps) {
   });
   const actionButtonSize = props.actionButtionSize || "lg";
 
+  const placeholerMapper: Record<keyof Address, string> = {
+    streetAddress: "45b waltham park ave.",
+    city: "Constant Spring",
+    parish: "Kingston",
+    country: "Jamaica",
+  };
+  
   const handleOnSaveClick = () => {
     props.onSave?.(addressRef.read());
   };
   const handleOnCancelClick = () => {
     props.onCancel?.();
   };
-  const addressPlaceholerMapper: Record<keyof Address, string> = {
-    streetAddress: "45b waltham park ave.",
-    city: "Constant Spring",
-    parish: "Kingston",
-    country: "Jamaica",
-  };
+
   return (
     <BasicDialog
       rerenderOnClose
@@ -74,11 +78,20 @@ function EditAddressDialog(props: EditAddressDialogProps) {
           const handleChange = (value: string) =>
             addressRef.upsert((address) => ({ ...address, [validKey]: value }));
           if (props.fieldHidden && props.fieldHidden(validKey)) return;
+          if (validKey === "parish") {
+            return (
+              <ParishField
+                defaultValue={addressRef.read().parish}
+                placeholder={placeholerMapper.parish}
+                onChange={handleChange}
+              />
+            );
+          }
           return (
             <BasicTextField
               key={validKey}
               width={"full"}
-              placeholder={addressPlaceholerMapper[validKey]}
+              placeholder={placeholerMapper[validKey]}
               label={camelCaseToLetter(validKey)}
               size={props.textfieldSize}
               defaultValue={addressRef.read()[validKey]}
@@ -103,6 +116,44 @@ function EditAddressDialog(props: EditAddressDialogProps) {
         </BasicDialog.ActionTrigger>
       </BasicDialog.Footer>
     </BasicDialog>
+  );
+}
+
+function ParishField(props: {
+  defaultValue: string;
+  placeholder: string;
+  onChange: (value: string) => void;
+}) {
+  const [selectedParish, setSelectedParish] = useState(props.defaultValue);
+
+  // Copied from google (at the time it was more convenient to manipulate a string rather than to
+  // spell out each parish in an array :/)
+  const parishes =
+    "Clarendon, Hanover, Kingston, Manchester, Portland, St. Andrew, St. Ann, St. Catherine, St. Elizabeth, St. James, St. Mary, St. Thomas, Trelawny, Westmoreland";
+
+  const handleOnChange = ({ value }: { value: string }) => {
+    props.onChange(value);
+    setSelectedParish(value);
+  };
+
+  return (
+    <BasicSelect
+      wrap
+      width={"match-anchor"}
+      maxHeight={"10rem"}
+      isSelected={({value}) => selectedParish === value}
+      options={parishes.split(",").map((parish) => ({ value: parish.trim() }))}
+      onOptionClick={handleOnChange}
+      slotProps={{divWrapper: {style: {width: "100%"}}}}
+    >
+      <BasicTextField
+        readOnly
+        label="Parish"
+        width={"full"}
+        value={selectedParish}
+        placeholder={props.placeholder}
+      />
+    </BasicSelect>
   );
 }
 

@@ -53,7 +53,9 @@ function PopoverContent() {
   const ctx = useContext(Context),
     popoverCtx = usePopoverContext(),
     [selectedIndex, setSelectedIndex] = useState(
-      ctx.options.findIndex((o) => ctx.isSelected(o))
+      ctx.isSelected
+        ? ctx.options.findIndex((o) => ctx.isSelected(o))
+        : undefined
     ),
     { triggerRerender } = useRerender();
 

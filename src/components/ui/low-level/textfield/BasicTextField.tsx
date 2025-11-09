@@ -97,7 +97,7 @@ interface BasicTextFieldProps extends AdditionalElements {
   ) => void;
 }
 function BasicTextField(props: BasicTextFieldProps) {
-  const textRef = useManagedRef(props.defaultValue || props.value);
+  const textRef = useManagedRef(props.defaultValue);
   const controlled = props.value !== undefined;
   const inputRef = props.ref || useRef<HTMLInputElement>(null);
 
@@ -261,6 +261,7 @@ function BasicTextField(props: BasicTextFieldProps) {
             // pattern="^\s*(\$|€|£|¥)?\s*(-)?\s*(\d{1,3}(?:,\d{3})*|\d+)(\.\d{2})?\s*$"
             // css={{ "&:invalid": { color: "red" } }}
             defaultValue={textRef.read()}
+            value={props.value}
             overflow={"hidden"}
             style={styles.input}
             onFocus={props.onFocus}
