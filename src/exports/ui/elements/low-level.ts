@@ -6,6 +6,7 @@ import BasicProfileCard from "@/components/ui/low-level/cards/BasicProfileCard";
 import BasicConfirmationDialog from "@/components/ui/low-level/dialog/BasicConfirmationDialog";
 import BasicDialog from "@/components/ui/low-level/dialog/BasicDialog";
 import BasicFormDialog from "@/components/ui/low-level/dialog/BasicFormDialog";
+import SimpleFormDialog from "@/components/ui/low-level/dialog/SimpleFormDialog";
 import BasicDisclaimer from "@/components/ui/low-level/disclaimer/BasicDisclaimer";
 import BasicDropzone from "@/components/ui/low-level/dropzone/BasicDropzone";
 import BasicEditableField from "@/components/ui/low-level/editable-field/BasicEditableField";
@@ -54,6 +55,7 @@ export {
   BasicDisclaimer,
   BasicFormDialog,
   BasicProfileCard,
+  SimpleFormDialog,
   BasicEditableField,
   BasicSegmentedControls,
   BasicConfirmationDialog,

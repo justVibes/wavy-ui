@@ -229,7 +229,7 @@ function BasicEditableField(props: BasicEditableFieldProps) {
                 editing={editing}
                 onCancel={handleOnCancelClick}
                 onSave={handleOnSave}
-                onEdit={handleOnEdit}
+                onEdit={handleOnEditClick}
               />
             ))}
         </BasicDiv>

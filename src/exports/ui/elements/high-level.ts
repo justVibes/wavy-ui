@@ -17,7 +17,6 @@ import ReceiptCard from "@/components/ui/high-level/cards/ReceiptCard";
 import Calendar from "@/components/ui/high-level/calendar/Calendar";
 import AttachmentsDialog from "@/components/ui/high-level/dialogs/AttachmentsDialog";
 import CalendarDialog from "@/components/ui/high-level/dialogs/CalendarDialog";
-import EditAddressDialog from "@/components/ui/high-level/dialogs/EditAddressDialog";
 import PaymentOptionsDialog from "@/components/ui/high-level/dialogs/PaymentOptionsDialog";
 import TaskResultDialog from "@/components/ui/high-level/dialogs/TaskResultDialog";
 import EmailComposer from "@/components/ui/high-level/email-composer/EmailComposer";
@@ -62,7 +61,6 @@ export * from "@/components/ui/high-level/dialogs/PaymentOptionsDialog";
 export {
   AttachmentsDialog,
   CalendarDialog,
-  EditAddressDialog,
   PaymentOptionsDialog,
   TaskResultDialog,
 };

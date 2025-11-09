@@ -150,7 +150,6 @@ function BasicPopover(props: BasicPopoverProps) {
       left: "right",
     }[placement.split("-")[0]];
 
-    console.log({ popoverPosition, placement });
 
     Object.assign(popoverRef.current?.style!, {
       position: "absolute",
