@@ -206,6 +206,19 @@ export function ellipsis(
   return restrictLineCount(1, style);
 }
 
+export function nativeEllipsis(
+  style?: CSS.Properties,
+  options = { apply: true }
+): CSS.Properties {
+  if (!options.apply) return style;
+  return {
+    ...style,
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  };
+}
+
 export function getScrollParent(node: HTMLElement | null) {
   let element = node;
   while (element && !isOverflown(element)) element = element.parentElement;

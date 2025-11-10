@@ -46,6 +46,8 @@ interface BasicEditableFieldProps {
   spaceBetween?: boolean;
   hideControls?: boolean;
   inputRef?: React.Ref<HTMLInputElement>;
+  rowGap?: BasicDivProps["gap"];
+  columnGap?: BasicDivProps["gap"];
   sanitizePopoverContent?: (value: string) => React.ReactNode;
   onEditClick?: () => void;
   onContentClick?: () => void;
@@ -127,7 +129,7 @@ function BasicEditableField(props: BasicEditableFieldProps) {
 
   const wrapperProps: BasicDivProps = {
     align: "center",
-    gap: "sm",
+    gap: props.rowGap ?? "sm",
     width: props.width,
     maxWidth: "full",
   };
@@ -155,6 +157,7 @@ function BasicEditableField(props: BasicEditableFieldProps) {
         <BasicDiv
           {...wrapperProps}
           grid
+          gap={props.columnGap ?? wrapperProps.gap}
           gridCols={
             props.hideControls
               ? "1fr"

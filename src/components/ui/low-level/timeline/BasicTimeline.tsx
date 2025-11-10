@@ -85,6 +85,7 @@ interface ItemProps {
   before?: React.ReactNode;
   /**The node that should be placed `after` (to the right of) the separator */
   after?: React.ReactNode;
+  disabled?: boolean;
   styles?: Partial<
     Record<"before" | "after", BasicHtmlElementStyleProps> & {
       indicator: Partial<
@@ -116,7 +117,12 @@ function Item(props: ItemProps) {
   };
   return (
     <>
-      <ItemContent style={before}>{props.before}</ItemContent>
+      <ItemContent
+        disabled={props.disabled}
+        style={{ ...before, align: before.align || "end" }}
+      >
+        {props.before}
+      </ItemContent>
 
       <BasicDiv align="center" height={"full"}>
         <LineSeparator hide={isSepHidden("first")} />
@@ -137,19 +143,25 @@ function Item(props: ItemProps) {
         <LineSeparator hide={isSepHidden("last")} />
       </BasicDiv>
 
-      <ItemContent style={after}>{props.after}</ItemContent>
+      <ItemContent disabled={props.disabled} style={after}>
+        {props.after}
+      </ItemContent>
     </>
   );
 }
 function ItemContent(props: {
   children: React.ReactNode;
+  disabled?: boolean;
   style?: BasicHtmlElementStyleProps;
 }) {
   return (
     <BasicDiv
       size={"full"}
       style={{
-        ...applyBasicStyle(props.style || {}),
+        ...applyBasicStyle({
+          ...(props.style || {}),
+          fade: props.disabled ? 0.5 : props.style.fade,
+        }),
         justifyContent: "center",
         flexGrow: 1,
       }}

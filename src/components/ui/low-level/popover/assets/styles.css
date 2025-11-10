@@ -3,8 +3,7 @@
   scale: 0;
   opacity: 0;
   transition-behavior: allow-discrete;
-  position-try-fallbacks: flip-block, flip-inline, flip-start, top, top right,
-    right, bottom right, bottom, bottom left, left, top left;
+  position-try-fallbacks: flip-block, flip-inline, flip-start;
   transition: display var(--duration), scale var(--duration),
     opacity var(--duration);
 }
