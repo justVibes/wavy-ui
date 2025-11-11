@@ -1,4 +1,4 @@
-import { assetResolver } from "@/asset-resolver/assetResolver";
+import { imageResolver } from "@/image-resolver/imageResolver";
 import {
   BasicCard,
   BasicDialog,
@@ -7,7 +7,7 @@ import {
   BasicSpan,
   DeleteButton,
   EmptyState,
-  fileTypeIconMapper,
+  getFileIcon,
   OpenButton,
   SearchTextField,
   UploadButton,
@@ -224,7 +224,7 @@ function Attachment(props: {
   onOpen?: (attachement: Attachment) => void;
 }) {
   const { typeAlias, path, name: filename, sizeInBytes } = props.value;
-  const Icon = fileTypeIconMapper(typeAlias);
+  const Icon = getFileIcon(typeAlias);
 
   return (
     <BasicCard.Root
@@ -324,7 +324,7 @@ function AttachmentsNotFound() {
           <BasicImg
             spill={"hidden"}
             size={"full"}
-            src={assetResolver("FlyLeavingBox")}
+            src={imageResolver("FlyLeavingBox")}
           />
         }
       />

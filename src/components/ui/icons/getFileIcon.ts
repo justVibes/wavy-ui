@@ -1,4 +1,4 @@
-import { KnownFileTypeAlias, LocalFile } from "@wavy/types";
+import { LocalFile } from "@wavy/types";
 import { IconType } from "react-icons";
 import { AiFillFileUnknown, AiOutlineFileUnknown } from "react-icons/ai";
 import {
@@ -16,11 +16,11 @@ import {
   RiFileWord2Line,
 } from "react-icons/ri";
 
-function fileTypeIconMapper(fileTypeAlias: LocalFile["typeAlias"]): {
+function getFileIcon(alias: LocalFile["typeAlias"]): {
   filled: IconType;
   outlined: IconType;
 } {
-  switch (fileTypeAlias) {
+  switch (alias) {
     case "excel":
       return { filled: RiFileExcel2Fill, outlined: RiFileExcel2Line };
     case "word":
@@ -37,8 +37,8 @@ function fileTypeIconMapper(fileTypeAlias: LocalFile["typeAlias"]): {
     case "unknown":
       return { filled: AiFillFileUnknown, outlined: AiOutlineFileUnknown };
     default:
-      return fileTypeAlias satisfies never;
+      return alias satisfies never;
   }
 }
 
-export { fileTypeIconMapper };
+export { getFileIcon };

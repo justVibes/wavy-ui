@@ -1,5 +1,5 @@
 import("fs/promises").then(async ({ cp }) => {
-  const sourceDir = "./src/asset-resolver/assets";
+  const sourceDir = "./src/image-resolver/assets";
   const targetDir = "./dist/assets";
 
   try {

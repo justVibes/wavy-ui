@@ -1,1 +1,1 @@
-export * from "@/components/ui/icons/fileTypeIconMapper";
+export * from "@/components/ui/icons/getFileIcon";

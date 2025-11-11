@@ -19,6 +19,7 @@ import BasicSpan from "@/components/ui/low-level/html/span/BasicSpan";
 import BasicIndicator from "@/components/ui/low-level/indicator/BasicIndicator";
 import BasicItemInfo from "@/components/ui/low-level/item-info/BasicItemInfo";
 import BasicMenu from "@/components/ui/low-level/menu/BasicMenu";
+import BasicPageSlider from "@/components/ui/low-level/page-slider/BasicPageSlider";
 import BasicPopover from "@/components/ui/low-level/popover/BasicPopover";
 import BasicSegmentedControls from "@/components/ui/low-level/segmented-controls/BasicSegmentedControls";
 import BasicSeparator from "@/components/ui/low-level/separator/BasicSeparator";
@@ -28,6 +29,7 @@ import BasicTag from "@/components/ui/low-level/tag/BasicTag";
 import BasicTextField from "@/components/ui/low-level/textfield/BasicTextField";
 import BasicTimeline from "@/components/ui/low-level/timeline/BasicTimeline";
 import BasicTooltip from "@/components/ui/low-level/tooltip/BasicTooltip";
+
 export {
   BasicOl,
   BasicDiv,
@@ -53,6 +55,7 @@ export {
   BasicTextField,
   BasicIndicator,
   BasicDisclaimer,
+  BasicPageSlider,
   BasicFormDialog,
   BasicProfileCard,
   SimpleFormDialog,

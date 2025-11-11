@@ -80,10 +80,13 @@ interface BasicPopoverProps
   width?: FloaterWidth;
   /**@default "md" */
   padding?: BasicDivProps["padding"];
+  gap?: BasicDivProps["gap"];
   /**@default "md" */
   corners?: BasicDivProps["corners"];
   /**@default "auto" */
   spill?: BasicDivProps["spill"];
+  fontSize?: BasicDivProps["fontSize"];
+  fontWeight?: BasicDivProps["fontWeight"];
   onOpenChange?: (open: boolean) => void;
   onOpen?: () => void;
   onClose?: () => void;
@@ -150,7 +153,6 @@ function BasicPopover(props: BasicPopoverProps) {
       left: "right",
     }[placement.split("-")[0]];
 
-
     Object.assign(popoverRef.current?.style!, {
       position: "absolute",
       positionAnchor: popoverId,
@@ -176,9 +178,13 @@ function BasicPopover(props: BasicPopoverProps) {
         color: props.color || "onSurface",
         borderColor: props.borderColor || "onSurface[0.1]",
         //Spacing
+        gap: props.gap,
         padding: props.padding ?? "md",
         //Shape
         corners: props.corners ?? "md",
+        //Text
+        fontSize: props.fontSize,
+        fontWeight: props.fontWeight,
         //Effects
         spill: props.spill || "auto",
         backdropBlur: props.backdropBlur,

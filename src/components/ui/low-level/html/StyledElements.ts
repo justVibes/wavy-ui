@@ -6,7 +6,7 @@ import { SafeOmit } from "@wavy/types";
 
 type CssProperties = SafeOmit<CSS.Properties, "backgroundColor" | "color"> &
   Partial<Record<"backgroundColor" | "color", BasicColor>>;
-type CssPseudos = Partial<Record<CSS.Pseudos, CssProperties>>;
+type CssPseudos = Partial<Record<CSS.Pseudos | `${CSS.Pseudos} ${string}`, CssProperties>>;
 type Sx = CssPseudos & CssProperties;
 
 class StyledElement {
