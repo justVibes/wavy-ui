@@ -35,7 +35,7 @@ interface RootProps
   height?: BasicDivProps["height"];
   clickable?: boolean;
   style?: BasicDivProps["style"];
-  sx?: BasicDivProps["sx"];
+  sx?: BasicDivProps["css"];
   spill?: BasicDivProps["spill"];
   children:
     | JSX.Element
@@ -60,7 +60,7 @@ function Root(props: RootProps) {
         align="center"
         style={props.style}
         spill={props.spill ?? "hidden"}
-        sx={props.sx}
+        css={props.sx}
       >
         {props.children}
       </BasicDiv>

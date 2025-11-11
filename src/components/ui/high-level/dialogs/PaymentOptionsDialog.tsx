@@ -75,7 +75,7 @@ function PaymentOptionsDialog(props: PaymentOptionsDialogProps<{}>) {
               {PreElements}
               <BasicDiv
                 width="full"
-                sx={{
+                css={{
                   backgroundColor:
                     dropdownVisible?.index === index
                       ? "onSurface[0.1]"
@@ -93,7 +93,7 @@ function PaymentOptionsDialog(props: PaymentOptionsDialogProps<{}>) {
                   cursor={option.disabled ? "not-allowed" : "pointer"}
                   padding={"md"}
                   corners={"md"}
-                  sx={{
+                  css={{
                     transition: "all 300ms linear",
                     ":hover":
                       option.disabled || dropdownVisible?.index === index

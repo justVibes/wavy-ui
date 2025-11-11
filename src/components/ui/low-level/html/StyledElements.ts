@@ -6,11 +6,13 @@ import { SafeOmit } from "@wavy/types";
 
 type CssProperties = SafeOmit<CSS.Properties, "backgroundColor" | "color"> &
   Partial<Record<"backgroundColor" | "color", BasicColor>>;
-type CssPseudos = Partial<Record<CSS.Pseudos | `${CSS.Pseudos} ${string}`, CssProperties>>;
-type Sx = CssPseudos & CssProperties;
+type CssPseudos = Partial<
+  Record<CSS.Pseudos | `${CSS.Pseudos} ${string}`, CssProperties>
+>;
+type InlineCss = CssPseudos & CssProperties;
 
 class StyledElement {
-  private static getStyle(sx: Sx) {
+  private static getStyle(sx: InlineCss) {
     if (!sx) return;
     return JSON.parse(JSON.stringify(sx || {}), (key, value) => {
       if (key === "backgroundColor" || key === "color")
@@ -19,10 +21,10 @@ class StyledElement {
     });
   }
   // ((sx:Sx) => Element) is used to apply the styles to the element
-  static span = (sx: Sx) => newStyled.span({ ...this.getStyle(sx) });
-  static div = (sx: Sx) => newStyled.div({ ...this.getStyle(sx) });
-  static img = (sx: Sx) => newStyled.img({ ...this.getStyle(sx) });
+  static span = (sx: InlineCss) => newStyled.span({ ...this.getStyle(sx) });
+  static div = (sx: InlineCss) => newStyled.div({ ...this.getStyle(sx) });
+  static img = (sx: InlineCss) => newStyled.img({ ...this.getStyle(sx) });
 }
 
 export default StyledElement;
-export type { CssProperties, Sx };
+export type { CssProperties, InlineCss as Sx };

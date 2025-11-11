@@ -42,7 +42,7 @@ type Addon = JSX.Element | IconType;
 interface BaseProps
   extends SafeOmit<
       BasicDivProps,
-      | "sx"
+      | "css"
       | "row"
       | "size"
       | "onScroll"

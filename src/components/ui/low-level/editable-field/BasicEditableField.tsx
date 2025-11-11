@@ -192,7 +192,7 @@ function BasicEditableField(props: BasicEditableFieldProps) {
               corners={"sm"}
               fontSize={size}
               cursor="text"
-              sx={{
+              css={{
                 transition: "all 200ms linear",
                 ":hover": {
                   backgroundColor: "onSurface[0.1]",
@@ -273,7 +273,7 @@ function Control(props: {
     <BasicDiv
       asChildren={props.outlined}
       corners={"sm"}
-      sx={{
+      css={{
         transition: "all 200ms linear",
         ":hover": {
           backgroundColor: "onSurface[0.1]",

@@ -113,7 +113,7 @@ function ListItem(props: ListItemProps) {
       fontSize={props.fontSize || "md"}
       align="center"
       onClick={handleOnClick}
-      sx={{
+      css={{
         transition: "all 300ms linear",
         color:
           props.completed && !(props.nested && props.active)

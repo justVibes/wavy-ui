@@ -36,9 +36,9 @@ function BasicOption(props: BasicOptionProps) {
       // 7.11.2025 @ 12:45 am (last comment)
       // For some reason scrolling into view doesn't work when initially rendered in BasicSelect...
       // Possible reasons: unknown,
-      // Tried: 
-      //  [1] Rerendering the parent (Not the BasicSelect put the direct parent of the options) 
-      //      after the initial render. 
+      // Tried:
+      //  [1] Rerendering the parent (Not the BasicSelect put the direct parent of the options)
+      //      after the initial render.
       ref={(r) => {
         if (r && !props.scrollIntoView && props.selected)
           r.scrollIntoView(true);
@@ -51,7 +51,7 @@ function BasicOption(props: BasicOptionProps) {
       padding={props.padding ?? "sm"}
       fontSize={props.fontSize || "sm"}
       cursor={props.disabled ? "not-allowed" : "pointer"}
-      sx={{
+      css={{
         ...props.sx,
         transition: props.sx?.transition || "all 200ms linear",
         color:

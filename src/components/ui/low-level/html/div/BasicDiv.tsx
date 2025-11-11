@@ -32,7 +32,7 @@ interface BasicDivProps
   overflowPadding?: keyof typeof CssSpacing;
   enableYFaders?: boolean;
   decreaseYFaderPadding?: boolean;
-  sx?: Sx;
+  css?: Sx;
   onScroll?: (event: React.UIEvent<HTMLDivElement, UIEvent>) => void;
 }
 function BasicDiv(props: PropsWithChildren<BasicDivProps>) {
@@ -78,7 +78,7 @@ function BasicDiv(props: PropsWithChildren<BasicDivProps>) {
     },
   });
 
-  const StyledDiv = StyledElement.div(props.sx);
+  const StyledDiv = StyledElement.div(props.css);
 
   if (props.hide) return;
   if (props.asChildren) return props.children;
