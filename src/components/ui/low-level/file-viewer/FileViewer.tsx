@@ -16,7 +16,6 @@ import { LocalFile, SafeOmit, SanitizeFile } from "@wavy/types";
 import { format } from "@wavy/fn";
 import { BasicSpanProps } from "../html/span/BasicSpan";
 
-// const NAV_THICKNESS = "3rem";
 const ID = {
   sidebar: "fv-sidebar",
   topbar: "fv-topbar",
@@ -96,6 +95,7 @@ function Indicator(props: FileViewerProps.IndicatorProps) {
           fontSize={props.styles?.fileMetadata?.fontSize || ".7rem"}
           gap={props.styles?.fileMetadata?.gap ?? "sm"}
           fade={props.styles?.fileMetadata?.fade ?? 0.5}
+          color={props.styles?.fileMetadata?.color}
           align="center"
         >
           <BasicSpan
@@ -407,6 +407,7 @@ declare namespace FileViewerProps {
         gap?: BasicDivProps["gap"];
         /**@default 0.5 */
         fade?: BasicDivProps["fade"];
+        color?: BasicColor;
       }>;
       fileMetadataSeparator: Partial<{
         /**@default ".3rem" */
