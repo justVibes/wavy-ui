@@ -14,22 +14,33 @@ import type { IconType } from "react-icons";
 import { BasicDivProps } from "../html/div/BasicDiv";
 import { LocalFile, SafeOmit, SanitizeFile } from "@wavy/types";
 import { format } from "@wavy/fn";
+import { BasicSpanProps } from "../html/span/BasicSpan";
 
-const NAV_THICKNESS = "3rem";
+// const NAV_THICKNESS = "3rem";
 const ID = {
   sidebar: "fv-sidebar",
   topbar: "fv-topbar",
   viewer: "fv-viewer",
 };
 
-const Context = createContext<{ borderColor: string; corners: string }>(null);
+const Context = createContext<{
+  borderColor: string;
+  corners: string;
+  navThickness: FileViewerProps.RootProps["navThickness"];
+}>(null);
 
 function Root(props: FileViewerProps.RootProps) {
   // It's resolved here so we don't have to resolve it again in the viewer.
   const borderColor = resolveBasicColor(props.borderColor || "outline[0.1]");
   const corners = CssShapes["md"];
   return (
-    <Context.Provider value={{ borderColor, corners }}>
+    <Context.Provider
+      value={{
+        borderColor,
+        corners,
+        navThickness: props.navThickness || "3rem",
+      }}
+    >
       <BasicDiv
         minHeight={props.minHeight}
         maxHeight={props.maxHeight}
@@ -56,8 +67,60 @@ function Root(props: FileViewerProps.RootProps) {
   );
 }
 
+function Indicator(props: FileViewerProps.IndicatorProps) {
+  const { navThickness } = useContext(Context);
+  const Icon = getFileIcon(props.file.typeAlias);
+
+  return (
+    <BasicDiv row align="center">
+      <Icon.filled
+        style={applyBasicStyle({
+          size: navThickness || props.styles?.icon?.size,
+          color: "pdf",
+          style: {
+            padding:
+              applyBasicStyle({ padding: props.styles?.icon?.padding })
+                ?.padding ?? `calc(${navThickness}/4.61)`,
+          },
+        })}
+      />
+      <BasicDiv>
+        <BasicSpan
+          color={props.styles?.filename?.color}
+          fontWeight={props.styles?.filename?.fontWeight}
+          fontSize={props.styles?.filename?.fontSize || "1rem"}
+          text={props.file.name}
+        />
+        <BasicDiv
+          row
+          fontSize={props.styles?.fileMetadata?.fontSize || ".7rem"}
+          gap={props.styles?.fileMetadata?.gap ?? "sm"}
+          fade={props.styles?.fileMetadata?.fade ?? 0.5}
+          align="center"
+        >
+          <BasicSpan
+            fontWeight="bold"
+            text={(props.file.ext || props.file.typeAlias)?.toUpperCase()}
+          />
+          <BasicDiv
+            size={props.styles?.fileMetadataSeparator?.size || ".3rem"}
+            corners={props.styles?.fileMetadataSeparator?.corners ?? "circle"}
+            backgroundColor={
+              props.styles?.fileMetadataSeparator?.color || "onSurface"
+            }
+          />
+          <BasicSpan
+            fade={0.75}
+            text={format("file-size", props.file.sizeInBytes)}
+          />
+        </BasicDiv>
+      </BasicDiv>
+    </BasicDiv>
+  );
+}
+
 function Topbar(props: FileViewerProps.TopbarProps) {
-  const Icon = getFileIcon(props.value.typeAlias);
+  const { navThickness } = useContext(Context);
   const { children, ...rest } = props as BasicDivProps & { children: any };
 
   return (
@@ -65,7 +128,7 @@ function Topbar(props: FileViewerProps.TopbarProps) {
       {...rest}
       row
       id={ID.topbar}
-      height={NAV_THICKNESS}
+      height={navThickness}
       width={"full"}
       align="center"
       gap={props.gap ?? "md"}
@@ -73,31 +136,6 @@ function Topbar(props: FileViewerProps.TopbarProps) {
       justify={props.justify || "space-between"}
       style={{ ...props.style, gridArea: ID.topbar }}
     >
-      <BasicDiv row align="center">
-        <Icon.filled
-          style={applyBasicStyle({
-            size: NAV_THICKNESS,
-            padding: ".65rem",
-            color: "pdf",
-          })}
-        />
-        <BasicDiv>
-          <BasicSpan fontSize="1rem" text={props.value.name} />
-          <BasicDiv row fontSize=".7rem" gap={"sm"} fade={0.5} align="center">
-            <BasicSpan fontWeight="bold" text={props.value.ext?.toUpperCase()} />
-            <BasicDiv
-              size={".3rem"}
-              corners={"circle"}
-              backgroundColor="onSurface"
-            />
-            <BasicSpan
-              fade={0.75}
-              text={format("file-size", props.value.sizeInBytes)}
-            />
-          </BasicDiv>
-        </BasicDiv>
-      </BasicDiv>
-
       {props.children}
     </BasicDiv>
   );
@@ -111,6 +149,7 @@ function SidebarRoot<T extends string>(
   props: FileViewerProps.SidebarRootProps<T>
 ) {
   const { children, onOptionClick, ...rest } = props;
+  const { navThickness } = useContext(Context);
   return (
     <SidebarContext.Provider
       value={{ onOptionClick: (o) => props.onOptionClick?.(o as T) }}
@@ -119,7 +158,7 @@ function SidebarRoot<T extends string>(
         {...rest}
         id={ID.sidebar}
         height={"full"}
-        width={NAV_THICKNESS}
+        width={navThickness}
         align="center"
         gap={rest.gap || "md"}
         padding={["md", ["top", "bottom"]]}
@@ -259,6 +298,7 @@ const FileViewer = {
   SidebarOption,
   Topbar,
   Viewer,
+  Indicator,
 };
 
 type SanitizedBasicDivProps = SafeOmit<
@@ -292,6 +332,9 @@ declare namespace FileViewerProps {
     width?: BasicDivProps["width"];
     /**@default "surfaceContainer" */
     backgroundColor?: BasicColor;
+    /**The height of the `Topbar` and the width of the `Sidebar`
+     * @default "3rem" */
+    navThickness?: `${number}${"rem" | "em" | "px"}`;
     children:
       | JSX.Element
       | [JSX.Element, JSX.Element]
@@ -300,7 +343,6 @@ declare namespace FileViewerProps {
 
   interface TopbarProps extends SanitizedBasicDivProps {
     children?: JSX.Element | JSX.Element[];
-    value: LocalFile | SanitizeFile<LocalFile>;
   }
 
   interface SidebarRootProps<T> extends SanitizedBasicDivProps {
@@ -341,6 +383,40 @@ declare namespace FileViewerProps {
     color?: BasicColor;
     /**@default true */
     centerContent?: boolean;
+  }
+
+  interface IndicatorProps {
+    file: LocalFile | SanitizeFile<LocalFile>;
+    styles?: Partial<{
+      icon: Partial<{
+        /**@default RootProps.navThickness */
+        size: BasicDivProps["size"];
+        /**@default calc(RootProps.navThickness/4.61) */
+        padding: BasicDivProps["padding"];
+      }>;
+      filename: Partial<{
+        /**@default "1rem" */
+        fontSize?: BasicSpanProps["fontSize"];
+        fontWeight?: BasicSpanProps["fontWeight"];
+        color?: BasicColor;
+      }>;
+      fileMetadata: Partial<{
+        /**@default ".7rem" */
+        fontSize?: BasicSpanProps["fontSize"];
+        /**@default "sm" */
+        gap?: BasicDivProps["gap"];
+        /**@default 0.5 */
+        fade?: BasicDivProps["fade"];
+      }>;
+      fileMetadataSeparator: Partial<{
+        /**@default ".3rem" */
+        size: BasicDivProps["size"];
+        /**@default "circle" */
+        corners?: BasicDivProps["corners"];
+        /**@default "onSurface" */
+        color?: BasicColor;
+      }>;
+    }>;
   }
 }
 

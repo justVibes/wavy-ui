@@ -16,11 +16,21 @@ import { BasicDivProps } from "../html/div/BasicDiv";
 
 const Context =
   createContext<
-    SafeOmit<PageSliderProps, "children" | "controller" | "onChange">
+    SafeOmit<
+      PageSliderProps,
+      | "children"
+      | "controller"
+      | "onChange"
+      | "childFlexGrow"
+      | "gap"
+      | "height"
+      | "width"
+    >
   >(null);
 
 interface PageSliderProps {
   controller?: UsePageSliderControllerReturn;
+  spill?: BasicDivProps["spill"];
   /**@default "md" */
   gap?: BasicDivProps["gap"];
   height?: BasicDivProps["height"];
@@ -30,6 +40,7 @@ interface PageSliderProps {
     | ((props: { isActive: boolean }) => React.ReactElement)[]
     | React.ReactElement[];
   navSize?: BasicDivProps["size"];
+  navBorderColor?: BasicColor;
   navIconSize?: `${number}${"rem" | "px" | "em"}`;
   /**@default "md" */
   navPadding?: BasicDivProps["padding"];
@@ -83,6 +94,7 @@ function PageSlider(props: PageSliderProps) {
       <div
         style={applyBasicStyle({
           pos: "relative",
+          spill:props.spill,
           height: props.height,
           width: props.width ?? "100%",
           gap: props.gap ?? ".5rem",
@@ -157,6 +169,7 @@ function Nav(props: {
       pos="absolute"
       centerSelf={"y"}
       centerContent
+      borderColor={ctx.navBorderColor}
       padding={ctx.navPadding ?? "md"}
       backgroundColor={ctx.navBackgroundColor || "onSurface"}
       color={ctx.navIconColor || "surface"}

@@ -7,7 +7,12 @@ import { SafeOmit } from "@wavy/types";
 type CssProperties = SafeOmit<CSS.Properties, "backgroundColor" | "color"> &
   Partial<Record<"backgroundColor" | "color", BasicColor>>;
 type CssPseudos = Partial<
-  Record<CSS.Pseudos | `${CSS.Pseudos} ${string}`, CssProperties>
+  Record<
+    | CSS.Pseudos
+    | `@media${" only " | " "}screen`
+    | `${CSS.Pseudos | "@media"} ${string}`,
+    CssProperties
+  >
 >;
 type InlineCss = CssPseudos & CssProperties;
 
