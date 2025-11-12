@@ -18,6 +18,8 @@ type UsePageSliderControllerReturn<T = void> = {
   goTo: (
     pageIndex: number,
     options?: Partial<{
+      /**@default false */
+      ignoreOutOfBoundsCheck: boolean;
       /**@default "smooth" */
       transition: "instant" | "smooth";
       /**The duration of a `smooth` transition in milliseconds.

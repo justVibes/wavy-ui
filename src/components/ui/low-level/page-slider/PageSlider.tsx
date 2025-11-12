@@ -65,7 +65,12 @@ function PageSlider<T>(props: PageSliderProps<T>) {
       const transition = options?.transition || "smooth";
       const from = activePage;
 
-      if (to === from || !props.children[to]) return;
+      if (
+        to === from ||
+        (!options?.ignoreOutOfBoundsCheck && !props.children[to])
+      )
+        return;
+      // if() return
       onChangeCb?.(from, to);
       props.onChange?.(from, to);
 
@@ -88,7 +93,7 @@ function PageSlider<T>(props: PageSliderProps<T>) {
         setActivePage(to);
       }
     },
-    [activePage]
+    [activePage, props.children]
   );
   // useCallback stops the function from rerendering when deps that are generated outside
   // of this component changes.

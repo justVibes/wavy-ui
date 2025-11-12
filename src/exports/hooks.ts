@@ -1,4 +1,5 @@
 import useAsyncEffect from "@/components/hooks/useAsyncEffect";
+import useChangeEffect from "@/components/hooks/useChangeEffect";
 import useDialogController, {
   UseDialogControllerReturn,
 } from "@/components/hooks/useDialogController";
@@ -15,6 +16,7 @@ export {
   useRerender,
   useManagedRef,
   useAsyncEffect,
+  useChangeEffect,
   useEventEmitter,
   usePopoverContext,
   useSessionStorage,
