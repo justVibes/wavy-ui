@@ -1,20 +1,31 @@
 import usePageSliderController, {
   UsePageSliderControllerReturn,
 } from "@/components/hooks/usePageSliderController";
-import { BasicColor, BasicDiv } from "@/main";
+import { applyBasicStyle, BasicColor, BasicDiv } from "@/main";
 import { hasIndex } from "@wavy/fn";
 import { SafeOmit } from "@wavy/types";
-import React, { createContext, useCallback, useContext, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { BasicDivProps } from "../html/div/BasicDiv";
 
 const Context =
   createContext<
-    SafeOmit<BasicPageSliderProps, "children" | "controller" | "onChange">
+    SafeOmit<PageSliderProps, "children" | "controller" | "onChange">
   >(null);
 
-interface BasicPageSliderProps {
+interface PageSliderProps {
   controller?: UsePageSliderControllerReturn;
+  /**@default "md" */
+  gap?: BasicDivProps["gap"];
+  height?: BasicDivProps["height"];
+  /**@default "100%" */
+  width?: BasicDivProps["width"];
   children:
     | ((props: { isActive: boolean }) => React.ReactElement)[]
     | React.ReactElement[];
@@ -28,15 +39,18 @@ interface BasicPageSliderProps {
   navBackgroundColor?: BasicColor;
   /**@default "circle" */
   navCorners?: BasicDivProps["corners"];
+  /**@default 1 */
+  childFlexGrow?: number;
   onChange?: (pageIdx: number) => void;
 }
-function BasicPageSlider(props: BasicPageSliderProps) {
+function PageSlider(props: PageSliderProps) {
   const controller = props.controller || usePageSliderController(0);
   const [activePage, setActivePage] = useState(controller.defaultPage ?? 0);
-
+  let onChangeCb: (page: number) => void;
   controller.goTo = useCallback(
     (page) => {
       if (page === activePage) return;
+      onChangeCb?.(page);
       props.onChange?.(page);
       setActivePage(page);
     },
@@ -46,6 +60,20 @@ function BasicPageSlider(props: BasicPageSliderProps) {
     (page) => page === activePage,
     [activePage]
   );
+  controller.onPageChange = useCallback((cb) => {
+    onChangeCb = cb;
+  }, []);
+
+  useEffect(() => {
+    const cleanup = () => {
+      controller.goTo = null;
+      controller.isActive = null;
+      controller.onPageChange = null;
+      onChangeCb = null;
+    };
+
+    return cleanup;
+  }, []);
 
   const handleOnPrevClick = () => controller.goTo(activePage - 1);
   const handleOnNextClick = () => controller.goTo(activePage + 1);
@@ -53,17 +81,18 @@ function BasicPageSlider(props: BasicPageSliderProps) {
   return (
     <Context.Provider value={{ ...props }}>
       <div
-        style={{
-          position: "relative",
-          display: "flex",
-          width: "100%",
-          transition: "all 300ms ease-in-out",
-          gap: ".5rem",
-          perspective: "500px",
-          transformStyle: "preserve-3d",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
+        style={applyBasicStyle({
+          pos: "relative",
+          height: props.height,
+          width: props.width ?? "100%",
+          gap: props.gap ?? ".5rem",
+          centerContent: true,
+          style: {
+            transition: "all 300ms ease-in-out",
+            perspective: "500px",
+            transformStyle: "preserve-3d",
+          },
+        })}
       >
         <Nav
           disabled={activePage <= 0}
@@ -83,7 +112,7 @@ function BasicPageSlider(props: BasicPageSliderProps) {
                 position: "absolute",
                 overflow: "hidden",
                 transition: "all 0.3s ease-out",
-                flexGrow: 1,
+                flexGrow: props.childFlexGrow ?? 1,
                 display: outOfView ? "none" : "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -157,4 +186,4 @@ function Nav(props: {
   );
 }
 
-export default BasicPageSlider;
+export default PageSlider;
