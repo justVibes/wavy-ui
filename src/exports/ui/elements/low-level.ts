@@ -3,6 +3,7 @@ import BasicBadge from "@/components/ui/low-level/badge/BasicBadge";
 import BasicCard from "@/components/ui/low-level/cards/BasicCard";
 import BasicMediaCard from "@/components/ui/low-level/cards/BasicMediaCard";
 import BasicProfileCard from "@/components/ui/low-level/cards/BasicProfileCard";
+import Checkbox from "@/components/ui/low-level/checkbox/Checkbox";
 import BasicConfirmationDialog from "@/components/ui/low-level/dialog/BasicConfirmationDialog";
 import BasicDialog from "@/components/ui/low-level/dialog/BasicDialog";
 import BasicFormDialog from "@/components/ui/low-level/dialog/BasicFormDialog";
@@ -38,6 +39,7 @@ import BasicTooltip from "@/components/ui/low-level/tooltip/BasicTooltip";
 
 export {
   BasicOl,
+  Checkbox,
   BasicDiv,
   BasicImg,
   BasicTag,
