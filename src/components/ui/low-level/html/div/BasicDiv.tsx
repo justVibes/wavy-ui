@@ -102,8 +102,9 @@ function BasicDiv(props: PropsWithChildren<BasicDivProps>) {
       }}
       style={{
         ...basicHtmlStyle,
-        display: props.grid ? "grid" : basicHtmlStyle?.display || "flex",
-        flexWrap: basicHtmlStyle || props.flexWrap ? "wrap" : undefined,
+        display: props.grid ? "grid" : basicHtmlStyle.display || "flex",
+        flexWrap:
+          basicHtmlStyle.flexWrap || (props.flexWrap ? "wrap" : undefined),
         gridTemplateColumns:
           basicHtmlStyle?.gridTemplateColumns || props.gridCols || "1fr",
         gridTemplateRows: basicHtmlStyle?.gridTemplateRows || props.gridRows,
