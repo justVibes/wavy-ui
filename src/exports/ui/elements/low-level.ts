@@ -19,6 +19,9 @@ import BasicDiv from "@/components/ui/low-level/html/div/BasicDiv";
 import BasicImg from "@/components/ui/low-level/html/img/BasicImg";
 import BasicOl from "@/components/ui/low-level/html/ol/BasicOl";
 import BasicSpan from "@/components/ui/low-level/html/span/BasicSpan";
+import BasicTable, {
+  type BasicTableProps,
+} from "@/components/ui/low-level/html/table/BasicTable";
 import BasicIndicator from "@/components/ui/low-level/indicator/BasicIndicator";
 import BasicItemInfo from "@/components/ui/low-level/item-info/BasicItemInfo";
 import BasicMenu from "@/components/ui/low-level/menu/BasicMenu";
@@ -42,6 +45,7 @@ export {
   BasicMenu,
   BasicCard,
   FileViewer,
+  BasicTable,
   BasicBadge,
   EmptyState,
   BasicDialog,
@@ -68,4 +72,4 @@ export {
   BasicConfirmationDialog,
 };
 
-export type { FileViewerProps };
+export type { FileViewerProps, BasicTableProps };

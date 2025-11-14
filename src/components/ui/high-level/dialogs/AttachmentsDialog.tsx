@@ -316,7 +316,7 @@ function Attachment(props: {
 function AttachmentsNotFound() {
   const ctx = useContext(MainContext);
   return (
-    <EmptyState>
+    <EmptyState.Root>
       <EmptyState.Indicator
         size="7rem"
         disableFade
@@ -348,7 +348,7 @@ function AttachmentsNotFound() {
           }}
         />
       )}
-    </EmptyState>
+    </EmptyState.Root>
   );
 }
 

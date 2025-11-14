@@ -101,11 +101,11 @@ function BasicDiv(props: PropsWithChildren<BasicDivProps>) {
         props.onScroll?.(e);
       }}
       style={{
-        ...basicHtmlStyle,
-        display: basicHtmlStyle.display || props.grid ? "grid" : "flex",
+        display: basicHtmlStyle.display || (props.grid ? "grid" : "flex"),
         flexWrap: props.flexWrap ? "wrap" : undefined,
         gridTemplateColumns: props.gridCols || "1fr",
         gridTemplateRows: props.gridRows,
+        ...basicHtmlStyle,
         WebkitMaskImage: props.enableYFaders && fadeMask,
         maskImage: props.enableYFaders && fadeMask,
       }}
